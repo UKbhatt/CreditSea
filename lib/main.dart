@@ -1,8 +1,15 @@
+import 'package:creditsea/View/detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'View/splash_screen.dart';
 import 'View/login_screen.dart';
 import 'package:get/get.dart';
+import 'View/loan_calculator.dart';
+import 'controller/step_controller.dart';
+import 'View/offer.dart';
+import 'View/application_screen.dart';
+
 void main() {
+  Get.put(StepController());
   runApp(const MyApp());
 }
 
@@ -17,6 +24,10 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: () => SplashScreen()),
         GetPage(name: '/login', page: () => LoginScreen()),
+        GetPage(name: '/details', page: () => DetailsScreen()),
+        GetPage(name: '/loanCalculator', page: () => LoanCalculatorPage()),
+        GetPage(name: '/offer', page: () => OfferScreen()),
+        GetPage(name: '/application', page: () => ApplicationStatusScreen())
       ],
       title: 'CreditSea',
       debugShowCheckedModeBanner: false,
