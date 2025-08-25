@@ -47,7 +47,7 @@ class DetailsController extends GetxController {
         'lastName': lastName.text.trim(),
         'gender': gender.value,
         'maritalStatus': maritalStatus.value,
-        'dob': dob.value!.toIso8601String(),   // ISO for backend
+        'dob': dob.value!.toIso8601String(),
         'email': email.text.trim().toLowerCase(),
         'pan': pan.text.trim().toUpperCase(),
         'password': 'TempPass#2025',

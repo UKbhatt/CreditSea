@@ -32,7 +32,6 @@ class _OtpCodeInputState extends State<OtpCodeInput> {
 
   @override
   void dispose() {
-    // dispose
     for (final x in _c) x.dispose();
     for (final x in _n) x.dispose();
     super.dispose();

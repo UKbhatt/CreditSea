@@ -21,7 +21,6 @@ class AuthController extends GetxController {
     }
   }
 
-  // actions
   void onRequestOtp() => goTo(AuthStep.otp);
   void onOtpVerified() => goTo(AuthStep.password);
   void onPasswordCreated() => goTo(AuthStep.signin);

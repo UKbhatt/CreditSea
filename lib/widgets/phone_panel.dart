@@ -117,7 +117,7 @@ class PhonePanel extends StatelessWidget {
 class OtpPanel extends StatelessWidget {
   const OtpPanel({
     required this.onVerified,
-    this.phoneLabel = '+91 8800642354', // show your masked/real number
+    this.phoneLabel = '+91 8800642354',
     this.timerText = '00:28',
   });
 
