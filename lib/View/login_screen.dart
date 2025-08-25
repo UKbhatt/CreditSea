@@ -2,31 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../controller/auth_controller.dart';
-import '../models/hero_slide.dart';
 import '../widgets/blue_hero.dart';
-import '../widgets/phone_panel.dart' ;
+import '../widgets/phone_panel.dart';
+import '../constants/hero_slides.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final c = Get.put(AuthController());
-
-  final slides = const [
-    HeroSlide(
-      asset: 'assets/images/img.png',
-      title: 'Flexible Loan Options',
-      subtitle: 'Loan types to cater to different financial needs',
-    ),
-    HeroSlide(
-      asset: 'assets/images/img_1.png',
-      title: 'Instant Loan Approval',
-      subtitle: 'Users will receive approval within minutes',
-    ),
-    HeroSlide(
-      asset: 'assets/images/img_2.png',
-      title: '24x7 Customer Care',
-      subtitle: 'Dedicated customer support team',
-    ),
-  ];
+  final slides = defaultHeroSlides;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +45,8 @@ class LoginScreen extends StatelessWidget {
               currentIndex: c.stepIndex,
               height: size.height * 0.28,
               onPageChanged: (i) {
-                c.currentStep.value = AuthStep.values[i];
+                const map = [AuthStep.phone, AuthStep.otp, AuthStep.signin];
+                c.currentStep.value = map[i];
               },
             )),
             const Spacer(),

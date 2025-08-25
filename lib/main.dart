@@ -7,9 +7,16 @@ import 'View/loan_calculator.dart';
 import 'controller/step_controller.dart';
 import 'View/offer.dart';
 import 'View/application_screen.dart';
+import 'data/api_client.dart';
+import 'controller/auth_controller.dart';
+import 'controller/hero_slider_controller.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Get.putAsync(() => HeroSliderController().init(), permanent: true);
   Get.put(StepController());
+  Get.put(AuthController());
+  ApiClient().init();
   runApp(const MyApp());
 }
 

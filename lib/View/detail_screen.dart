@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../controller/step_controller.dart';
 import '../widgets/step_header.dart';
+import '../data/auth_service.dart';
+import 'package:dio/dio.dart';
 
 enum RegisterSubStep { personal, emailOtp, pan }
 
@@ -35,6 +37,32 @@ class DetailsController extends GetxController {
     Timer(const Duration(seconds: 2), () => isLoading.value = false);
   }
 
+
+  final _auth = AuthService();
+
+  Future<void> submitRegistration() async {
+    try {
+      final payload = {
+        'firstName': firstName.text.trim(),
+        'lastName': lastName.text.trim(),
+        'gender': gender.value,
+        'maritalStatus': maritalStatus.value,
+        'dob': dob.value!.toIso8601String(),   // ISO for backend
+        'email': email.text.trim().toLowerCase(),
+        'pan': pan.text.trim().toUpperCase(),
+        'password': 'TempPass#2025',
+      };
+
+      final user = await _auth.register(payload);
+      Get.toNamed('/loanCalculator');
+    } on DioException catch (e) {
+      final msg = e.response?.data?['error'] ?? e.message;
+      Get.snackbar('Registration failed', msg.toString());
+    } catch (e) {
+      Get.snackbar('Registration failed', e.toString());
+    }
+  }
+
   Future<void> pickDob(BuildContext context) async {
     final now = DateTime.now();
     final picked = await showDatePicker(
@@ -60,7 +88,7 @@ class DetailsController extends GetxController {
   bool _validPan(String v) =>
       RegExp(r"^[A-Z]{5}[0-9]{4}[A-Z]$").hasMatch(v.trim());
 
-  void onContinue() {
+  Future<void> onContinue() async {
     final s = stepCtrl;
 
     if (s.step.value == DetailsStep.register) {
@@ -96,6 +124,7 @@ class DetailsController extends GetxController {
           Get.snackbar('Invalid PAN', 'Format: ABCDE1234F');
           return;
         }
+        await submitRegistration();
         Get.offAllNamed('/loanCalculator');
         return;
       }
@@ -445,7 +474,7 @@ class _DetailsForm extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: c.onContinue,
+              onPressed: () => c.onContinue(),
               child: Obx(() => Text(
                 stepCtrl.step.value == DetailsStep.register
                     ? 'Continue'
